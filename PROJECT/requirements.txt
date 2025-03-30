@@ -1,0 +1,11 @@
+Flask
+Flask-Session
+pytz
+requests
+ast
+random
+sqlite3
+requests
+json
+datetime
+werkzeug

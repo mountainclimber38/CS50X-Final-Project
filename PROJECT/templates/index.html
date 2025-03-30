@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>Trivia Time!</title>
+{% endblock %}
+
+{% block body %}
+    <main class="d-inline-block border border-primary bg-info-subtle" style="height: 30em; width:100%; align-content: center;">
+        <div class="text-center">
+            <h1 class="text-primary fw-bold" style="font-size:4em">
+                Play Trivia
+            </h1>
+
+            <p class="fw-bolder fs-5 mt-3">
+                Wanna test how much knowledge you have in a specific topic? Click the button and answer questions!
+            </p>
+
+            <a class="mt-4 btn btn-outline-primary btn-lg" href="/play" role="button">Play Trivia Now!</a>
+        </div>
+    </main>
+
+    <section class="d-inline-block border border-success bg-success-subtle" style="height: 30em; width:100%; align-content: center;">
+        <div class="text-center">
+            <h1 class="text-success fw-bold" style="font-size:4em">
+                Create Your Own Trivia
+            </h1>
+
+            <p class="fw-bolder fs-5 mt-3">
+                Share with friends or with Everyone and test what they know! Click the button and create a Trivia!
+            </p>
+
+            <a class="mt-4 btn btn-outline-success btn-lg" href="/create" role="button">Create your Trivia!</a>
+        </div>
+    </section>
+
+    <section class="d-inline-block border border-warning bg-warning-subtle" style="height: 30em; width:100%; align-content: center;">
+        <div class="text-center">
+            <h1 class="text-warning fw-bold" style="font-size:4em">
+                Play Other People's Trivia
+            </h1>
+
+            <p class="fw-bolder fs-5 mt-3">
+                Play Trivias that other People have made!
+            </p>
+
+            <a class="mt-4 btn btn-outline-warning btn-lg" href="/public-trivia" role="button">Play Public Trivia!</a>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>Trivia</title>
+{% endblock %}
+
+{% block body %}
+    <main style="padding-bottom:10em">
+
+        <h1 class="text-primary fw-bold text-center my-5" style="font-size:4em">Trivia Time</h1>
+
+        <div class="d-flex" style="justify-content:center;">
+            <div style="width: 60%;">
+                <form action="/confirm-answer" method="post">
+
+        {% for question in questions %}
+            {% set outer_loop_index = loop.index %}
+
+            <div class="border-top border-primary mb-5 pt-2">
+
+                <p class="mb-4">Category: {{ question.category.title() }}</p>
+                <h5>Question {{ outer_loop_index }}: {{ question.question | safe }}</h5>
+
+                <p>Difficulty: <span class="{{ question.difficulty }}">{{ question.difficulty.capitalize() }}</span></p>
+
+
+                <h5 class="mt-5 mb-3">Choose Your Answer:</h5>
+                {% if question.type == "boolean" %}
+
+                    <input type="radio" class="btn-check" name="truefalse-{{ outer_loop_index }}" value="False" id="danger-outlined-{{ outer_loop_index }}" checked>
+                    <label class="btn btn-outline-danger" for="danger-outlined-{{ outer_loop_index }}">False</label>
+
+                    <label> or </label>
+
+                    <input type="radio" class="btn-check" name="truefalse-{{ outer_loop_index }}" value="True" id="success-outlined-{{ outer_loop_index }}">
+                    <label class="btn btn-outline-success" for="success-outlined-{{ outer_loop_index }}">True</label>
+
+                {% else %}
+
+                    {% set all_answers = question.incorrect_answers + [question.correct_answer] %}
+                    {% set shuffled_answers = all_answers | shuffle %}
+
+                    {% for answer in shuffled_answers %}
+
+                    <div class="form-check">
+                            <input class="form-check-input" type="radio" name="multiple-{{ outer_loop_index }}" id="multiple-{{ loop.index }}-{{ outer_loop_index }}" value="{{ answer }}" {% if loop.index == 1 %}checked{% endif %}>
+
+                        <label class="form-check-label" for="multiple-{{ loop.index }}-{{ outer_loop_index }}">
+                            {{ answer | safe}}
+                        </label>
+
+                    </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            </div>
+
+
+        {% endfor %}
+                    <div class="d-flex border-top border-primary my-5 pt-5" style="justify-content:center">
+                        <button class="btn btn-primary" type="submit">Submit Your answers</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </main>
+{% endblock %}

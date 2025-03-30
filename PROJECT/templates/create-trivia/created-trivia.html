@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>Create Trivia</title>
+
+    <style>
+        body {
+            background-color: #d1e7dd;
+        }
+
+        main {
+            min-height: 100vh;
+            padding-bottom: 10em;
+        }
+
+        .styled-button {
+          background-color: #4CAF50;
+          color: #fff;
+          padding: 20px 40px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 2em;
+          font-weight: bold;
+        }
+
+        .styled-button:hover {
+          background-color: #3e8e41;
+        }
+
+        .centered-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 80%;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div class="centered-container">
+        <form action="/created-trivia" method="post">
+            <input name="trivia-id" value="{{ triviaId }}" type="hidden">
+            <button class="styled-button" type="submit">
+                Try Your Trivia!
+            </button>
+        </form>
+
+        <br>
+
+        <a class="easy mt-3" style="font-weight:bold" href="/">
+            Return to homepage
+        </a>
+    </div>
+
+{% endblock %}

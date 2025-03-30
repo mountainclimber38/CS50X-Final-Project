@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+<title>Register Account</title>
+
+{% endblock %}
+
+
+{% block body %}
+
+<div class="d-flex" style="justify-content:center">
+    <div style="width: 40%">
+        <form action="/register" method="post">
+
+          <div class="my-3">
+            <label class="form-label">Username</label>
+            <input type="text" autocomplete="off" placeholder="Username" class="form-control" name="username">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" placeholder="Password" class="form-control" name="password">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Verify Password</label>
+            <input type="password" placeholder="Verify Password" class="form-control" name="verify-password">
+              <div class="form-text">We'll never share your password with anyone else.</div>
+          </div>
+
+          <p>
+            Already have an account? <a href="/login">Login now</a>.
+          </p>
+
+          <button type="submit" class="btn btn-primary w-100">Register</button>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

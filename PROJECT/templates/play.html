@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+<title>Play Trivia!</title>
+
+<style>
+nav {
+    background-color:white;
+}
+
+body {
+    background-color: #cff4fc;
+}
+
+main {
+    min-height: 120vh;
+}
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<main>
+
+    <div class="text-center">
+        <h1 class="text-primary fw-bold my-4" style="font-size:4em">Play Trivia</h1>
+
+        <h2 class="text-info-emphasis fw-bold mb-4">Choose your preferences for the trivia.</h2>
+
+        <h5 class="text-info-emphasis fw-bold mb-4">Open to anything? Leave it blank for a completely random quiz selection.</h5>
+    </div>
+
+    <div class="d-flex" style="justify-content:center">
+        <div style="width: 30%;">
+            <form action="/play" method="post">
+
+                <label class="form-label">Select Category</label>
+                <select class="form-select mb-4" name="category">
+
+                    <option value="any category" selected>Any Category</option>
+
+                    {% for category_name, options in categories.items() %}
+                        <optgroup label="-- {{ category_name }}">
+                            {% for option in options.keys() %}
+                                <option value="{{ category_name }},{{ option }}">{{ option }}</option>
+                            {% endfor %}
+                        </optgroup>
+                    {% endfor %}
+
+                </select>
+
+                <div class="mb-4">
+
+                  <label class="form-label">Select Number of Questions</label>
+                  <input type="number" min="1" max="20" class="form-control" name="number-of-questions" placeholder="No. of Questions" autocomplete="off" required>
+                  <div class="form-text">Maximum No. of Questions is 20. (Required)</div>
+
+                </div>
+
+                <label class="form-label">Select Difficulty</label>
+                <div class="mb-4">
+                    <input type="checkbox" class="btn-check" name="difficulty" value="easy" id="success-outlined" autocomplete="off" onclick="uncheck(this);">
+                    <label class="btn btn-outline-success" for="success-outlined">Easy</label>
+
+                    <input type="checkbox" class="btn-check" name="difficulty" value="medium" id="warning-outlined" autocomplete="off" onclick="uncheck(this);">
+                    <label class="btn btn-outline-warning" for="warning-outlined">Medium</label>
+
+                    <input type="checkbox" class="btn-check" name="difficulty" value="hard" id="danger-outlined" autocomplete="off" onclick="uncheck(this);">
+                    <label class="btn btn-outline-danger" for="danger-outlined">Hard</label>
+                </div>
+
+                <label class="form-label">Select Type of Questions</label>
+                <select class="form-select mb-4" name="type-of-questions">
+
+                    <option value="any type" selected>Any Type</option>
+                    <option value="multiple">Multiple Choice</option>
+                    <option value="boolean">True / False</option>
+
+                </select>
+
+                <button type="submit" class="btn btn-primary w-100">Play Quiz</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        function uncheck(radio) {
+            const checkboxes = document.querySelectorAll('.btn-check');
+
+            checkboxes.forEach(checkbox => {
+            if (checkbox != radio)
+                checkbox.checked = false;
+            })
+        }
+    </script>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+<title>Public Trivias!</title>
+
+<style>
+    body {
+        background-color: #fff3cd;
+    }
+
+    main {
+        min-height: 100vh;
+        padding-bottom: 10em;
+    }
+
+    .trivia-card {
+        background-color: white;
+        width:60%;
+        padding: 2em 1em;
+        border-radius: 20px;
+        box-shadow: 1px 3px 5px 10px rgba(0, 0, 0, 0.1);
+        cursor:pointer;
+
+        transition: background-color 0.2s;
+    }
+
+    .trivia-card:hover {
+        background-color: #f3f2f2;
+    }
+
+    .attribute-margin {
+        margin-bottom: -0.1em;
+        font-size: 1.1em;
+    }
+
+    .attribute-color {
+        color:#e8b213
+    }
+
+    #find-trivia-card {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    display: block;
+    }
+
+    #find-trivia-card:focus {
+        outline: none;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    #find-trivia-card::placeholder {
+        color: #ccc;
+    }
+
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+<main class="mt-4">
+    <div class="text-center">
+        <h1 class="mb-4 text-warning fw-bold" style="font-size:4em">Public Trivia</h1>
+
+        <h2 class="text-info-emphasis fw-bold mb-4">Play Trivias created by the community.</h2>
+
+        <h5 class="text-info-emphasis fw-bold mb-4">Scroll Down to see and play all publicly available trivias.</h5>
+    </div>
+
+    <div style="margin-top:10em; align-items: center">
+        <h5 class="text-info-emphasis text-center fw-bold">You can search for trivia cards using it's creator's name.</h5>
+        <div class="d-flex mb-5" style="justify-content:center;">
+            <input id="find-trivia-card" type="text" placeholder="Search Name" autocomplete="off" autofocus>
+        </div>
+
+        {% for trivia in createdTrivias %}
+        <form action="/choose-public-trivia" method="post" style="flex-direction: column;" class="d-flex align-items-center">
+
+            <input type="hidden" name="trivia-id" value="{{ trivia[2] }}">
+
+            <div class="trivia-card" style="margin-bottom: 5em" onclick="document.getElementById('submit-button-{{loop.index}}').click();">
+                <h4 class="creator mb-4 fw-bold">Created By: <span class="trivia-card-name attribute-color">{{ trivia[1] }}</span></h4>
+                <p class="fw-bold attribute-margin">Amount of Questions: <span class="attribute-color">{{ trivia[5] }}</span></p>
+                <p class="fw-bold attribute-margin">Category: <span class="attribute-color">{{ trivia[4].title() }}</span></p>
+
+                <div class="d-flex" style="justify-content: space-between">
+                    <p class='fw-bold attribute-margin'>Difficulty: <span class="{{ trivia[6]}}">{{ trivia[6].capitalize()}}</span></p>
+                    <p class='fw-bold attribute-margin'>Trivia Id: <span class="attribute-color">{{ trivia[2] }}</span></p>
+                </div>
+
+                <div class="d-flex" style="justify-content: space-between">
+                    <p class='fw-bold attribute-margin'>Type: <span  class="attribute-color">{{ trivia[7].capitalize() }}</span></p>
+                    <p class='fw-bold attribute-margin'>Created On: <span class="attribute-color">{{ trivia[9] }}</span></p>
+                </div>
+            </div>
+
+            <button id="submit-button-{{loop.index}}" type="submit" hidden="hidden"></button>
+        </form>
+
+        {% endfor %}
+    </div>
+
+</main>
+
+<script>
+    const input = document.getElementById('find-trivia-card');
+    input.addEventListener("input", function() {
+        document.querySelectorAll('.trivia-card-name').forEach(function(element) {
+            if (!element.textContent.toLowerCase().includes(input.value.toLowerCase())) {
+                element.parentElement.parentElement.style.display = "none";
+            } else {
+                element.parentElement.parentElement.style.display = "block"; // Or any other valid display value
+            }
+        });
+    });
+
+</script>
+
+{% endblock %}

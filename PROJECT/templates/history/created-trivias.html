@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+<title>Your Created Trivias!</title>
+
+<style>
+    body {
+        background-color: #8646f7bd;
+    }
+
+    main {
+        min-height: 100vh;
+        padding-bottom: 10em;
+    }
+
+    .trivia-card {
+        background-color: white;
+        width:60%;
+        padding: 2em 1em;
+        border-radius: 20px;
+        box-shadow: 1px 3px 5px 10px rgba(0, 0, 0, 0.1);
+        cursor:pointer;
+
+        transition: background-color 0.2s;
+    }
+
+    .trivia-card:hover {
+        background-color: #f3f2f2;
+    }
+
+    .attribute-margin {
+        margin-bottom: -0.1em;
+        font-size: 1.1em;
+    }
+
+    .attribute-color {
+        color:#8646f7bd
+    }
+
+    .visibility-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+    .visibility-button:hover {
+        background-color: #3e8e41;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24);
+    }
+
+    .visibility-button:active {
+        transform: translateY(2px);
+    }
+
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+<main class="mt-4">
+    <div class="text-center">
+        <h1 class="mb-4 text-warning fw-bold" style="font-size:4em">Your Created Trivias</h1>
+
+        <h2 class="text-warning fw-bold mb-4">See all the trivias that were created by You.</h2>
+
+        <h5 class="text-warning fw-bold mb-4">If You prefer, Change whether your trivia is public or private.</h5>
+    </div>
+
+    <div style="margin-top:6em;">
+
+        {% for trivia in createdTrivias %}
+        <form action="/history/change-visibility" method="post" style="flex-direction: column;" class="d-flex align-items-center mb-3">
+            <input type="hidden" name="trivia-id-visibility-swap" value="{{ trivia[2] }}">
+            <button class="visibility-button" type="submit">Set Visibility to Public/Private</button>
+        </form>
+        <form action="/choose-public-trivia" method="post" style="flex-direction: column;" class="d-flex align-items-center">
+
+            <input type="hidden" name="trivia-id" value="{{ trivia[2] }}">
+            <div class="trivia-card" style="margin-bottom: 5em" onclick="document.getElementById('submit-button-{{loop.index}}').click();">
+                <h4 class="mb-4 fw-bold">Created By: <span class="trivia-card-name attribute-color">{{ trivia[1] }}</span></h4>
+                <p class="fw-bold attribute-margin">Amount of Questions: <span class="attribute-color">{{ trivia[5] }}</span></p>
+                <p class="fw-bold attribute-margin">Category: <span class="attribute-color">{{ trivia[4].title() }}</span></p>
+                <p class="fw-bold attribute-margin">Visibility: <span class="attribute-color">{{ trivia[8].title() }}</span></p>
+
+                <div class="d-flex" style="justify-content: space-between">
+                    <p class='fw-bold attribute-margin'>Difficulty: <span class="{{ trivia[6]}}">{{ trivia[6].capitalize()}}</span></p>
+                    <p class='fw-bold attribute-margin'>Trivia Id: <span class="attribute-color">{{ trivia[2] }}</span></p>
+                </div>
+
+                <div class="d-flex" style="justify-content: space-between">
+                    <p class='fw-bold attribute-margin'>Type: <span  class="attribute-color">{{ trivia[7].capitalize() }}</span></p>
+                    <p class='fw-bold attribute-margin'>Created On: <span class="attribute-color">{{ trivia[9] }}</span></p>
+                </div>
+            </div>
+
+            <button id="submit-button-{{loop.index}}" type="submit" hidden="hidden"></button>
+        </form>
+
+        {% endfor %}
+    </div>
+</main>
+
+
+{% endblock %}
